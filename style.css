@@ -1,0 +1,356 @@
+/* Import d'une police style "Terminal" / Monospace */
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+:root {
+    --primary-color: #0ff; /* Cyan néon */
+    --secondary-color: #008f8f; /* Cyan plus foncé */
+    --bg-color: #050a10; /* Noir bleuté profond */
+    --text-color: #e0ffff; /* Blanc cyan pâle */
+    --glitch-color-1: #f0f; /* Magenta pour le glitch */
+    --glitch-color-2: #0ff; /* Cyan pour le glitch */
+    --section-border: 1px solid rgba(0, 255, 255, 0.2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Share Tech Mono', monospace;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* --- Effets de fond (Scanlines et Particules) --- */
+#particles-js {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    opacity: 0.6;
+}
+
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.03) 50%,
+        rgba(0, 0, 0, 0.03) 50%
+    );
+    background-size: 100% 4px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem;
+    position: relative;
+    z-index: 20;
+}
+
+/* --- Navigation --- */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 0;
+    border-bottom: var(--section-border);
+    margin-bottom: 4rem;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.nav-links a {
+    color: var(--text-color);
+    text-decoration: none;
+    margin-left: 2.5rem;
+    position: relative;
+    transition: color 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.nav-links a:hover {
+    color: var(--primary-color);
+}
+
+/* Effet de survol "glitch" sur les liens du menu */
+.nav-links a::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    color: var(--primary-color);
+    transform: translateX(-2px);
+    transition: opacity 0.3s;
+    text-shadow: 2px 0 var(--glitch-color-1), -2px 0 var(--glitch-color-2);
+    z-index: -1;
+}
+
+.nav-links a:hover::before {
+    opacity: 0.5;
+    animation: navGlitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+}
+
+@keyframes navGlitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+}
+
+/* --- Hero Section --- */
+.hero {
+    text-align: left;
+    padding: 6rem 0;
+    border-bottom: var(--section-border);
+}
+
+.hero-content {
+    max-width: 800px;
+}
+
+/* Effet Glitch principal sur le Titre H1 */
+.glitch {
+    font-size: 5rem;
+    position: relative;
+    color: var(--text-color);
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glitch::before {
+    left: 2px;
+    text-shadow: -2px 0 var(--glitch-color-1);
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitchAnim 3s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+    left: -2px;
+    text-shadow: -2px 0 var(--glitch-color-2);
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitchAnim 2s infinite linear alternate-reverse;
+}
+
+@keyframes glitchAnim {
+    0% { clip: rect(12px, 9999px, 58px, 0); }
+    20% { clip: rect(85px, 9999px, 35px, 0); }
+    40% { clip: rect(3px, 9999px, 92px, 0); }
+    60% { clip: rect(35px, 9999px, 14px, 0); }
+    80% { clip: rect(67px, 9999px, 21px, 0); }
+    100% { clip: rect(91px, 9999px, 8px, 0); }
+}
+
+.subtitle {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.terminal-text {
+    font-family: 'Courier New', monospace;
+    color: rgba(224, 255, 255, 0.7);
+    margin-bottom: 2.5rem;
+    font-size: 1.1rem;
+}
+
+/* --- Boutons --- */
+.btn {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: transparent;
+    color: var(--primary-color);
+    text-decoration: none;
+    border: 2px solid var(--primary-color);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background: var(--primary-color);
+    color: var(--bg-color);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.7);
+}
+
+.btn-icon {
+    margin-right: 10px;
+}
+
+/* --- Sections Générales --- */
+.section {
+    padding: 6rem 0;
+    border-bottom: var(--section-border);
+}
+
+.section-title {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    position: relative;
+    display: inline-block;
+}
+
+.section-title .highlight {
+    color: var(--primary-color);
+}
+
+/* --- Section Logs (Parcours) --- */
+.logs-container {
+    border-left: 2px solid var(--secondary-color);
+    padding-left: 2rem;
+}
+
+.log-entry {
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.log-entry::before {
+    content: '';
+    position: absolute;
+    left: -2.6rem;
+    top: 5px;
+    width: 1rem;
+    height: 1rem;
+    background: var(--bg-color);
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 0 10px var(--primary-color);
+}
+
+.log-date {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.log-title {
+    font-size: 1.5rem;
+    margin: 0.5rem 0;
+}
+
+/* --- Section Modules (Compétences) --- */
+.modules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+}
+
+.module-category h3 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    border-bottom: 1px dashed var(--secondary-color);
+    padding-bottom: 0.5rem;
+}
+
+.tech-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.tech-item {
+    padding: 0.8rem 1.5rem;
+    border: 1px solid var(--secondary-color);
+    background: rgba(0, 255, 255, 0.05);
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.tech-item:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+    transform: translateY(-2px);
+    background: rgba(0, 255, 255, 0.1);
+}
+
+/* --- Section Directive (Objectifs) --- */
+.directive-box {
+    border: 2px solid var(--primary-color);
+    padding: 2rem;
+    background: rgba(0, 255, 255, 0.03);
+    position: relative;
+}
+
+.command {
+    color: var(--primary-color);
+    margin-right: 1rem;
+}
+
+.status-bar {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px dotted var(--secondary-color);
+    font-size: 0.9rem;
+    color: rgba(224, 255, 255, 0.5);
+    animation: blink 2s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* --- Footer --- */
+footer {
+    text-align: center;
+    padding: 3rem 0;
+    color: rgba(224, 255, 255, 0.5);
+    font-size: 0.9rem;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none; /* Simplification pour mobile */
+    }
+    
+    .hero {
+        padding-top: 3rem;
+    }
+    
+    .glitch {
+        font-size: 3.5rem;
+    }
+    
+    .subtitle {
+        font-size: 1.5rem;
+    }
+    
+    .modules-grid {
+        grid-template-columns: 1fr;
+    }
+}
